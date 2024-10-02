@@ -1,0 +1,17 @@
+name: endtoend
+on: [push, pull_request]
+jobs:
+
+  build:
+    name: End-to-End Test
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check if workflow needs to be skipped
+      id: skip-workflow
+      run: |
+        skip='false'
+        if [[ "${{github.event.pull_request}}" ==  "" ]] && [[ "${{github.ref}}" != "refs/heads/main" ]] && [[ ! "${{github.ref}}" =~ ^refs/heads/release-[0-9]+\.[0-9]$ ]] && [[ ! "${{github.ref}}" =~ "refs/tags/.*" ]]; then
+          skip='true'
+        fi
+        echo Skip ${skip}
+        echo "skip-workflow=${skip}" >> $GITHUB_OUTPUT
