@@ -10,4 +10,3 @@ jobs:
       id: skip-workflow
       run: |
         version=${{ github.event.pull_request.number || github.ref_name }}-$(uuidgen)
-        echo $version
